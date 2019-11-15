@@ -1,0 +1,161 @@
+\documentclass[11pt,a4j]{jarticle}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{here}
+\title{要求仕様書\\～資産コード管理の電子化～}
+\author{廣瀬大哲 \and 岩渕皐樹 \and 桶本夏輝 \and 水間黎}
+\date{2019/08/01}
+\pagestyle{plain}
+
+\begin{document}
+  \maketitle
+  \thispagestyle{empty}
+  
+  \newpage
+  
+   \tableofcontents
+  \newpage
+  \section{目的}
+  現在，サレジオ高専内の備品は資産コードによって管理を行っているが一括でそれらを確認し所在地を確かめる手段が存在しない．
+  
+  そのため本ソフトウェアはサレジオ高専の備品管理を電子化し，管理を容易にすることを目的としたソフトウェアである．
+
+  \section{概要}
+  本システムの概要及び対象とする備品シールの説明を以下に記す．\par
+  
+\begin{figure}[h]
+\begin{center}
+\includegraphics[keepaspectratio, scale=0.45]{gaiyo_1}
+\caption{サレジオ高専にて用いられている備品シール}
+\end{center}
+
+\begin{center}
+\includegraphics[keepaspectratio, scale=0.45]{gaiyo_2}
+\caption{複数の備品が1つの資産コードにある備品シール}
+\end{center}
+
+\begin{center}
+\includegraphics[keepaspectratio, scale=0.45]{gaiyo_3}
+\caption{資産名が存在しない備品シール}
+\end{center}
+
+\end{figure}
+
+サレジオ高専では現在，図1，図2，図3のような備品シールを用いて備品を管理している．
+これらの資産コードと資産名，数量，管理者，管理場所の情報を整理し，管理を行う．
+
+  \section{動作環境}
+本ソフトウェアはWindows上での動作とAndroid上での動作の両方を行うことができる．Androidアプリケーションの作成はAndroid Javaを使用し，Windowsアプリケーションの作成はJavaを使用する．
+
+  \section{前提条件}
+  \noindent
+1)本ソフトウェアはサレジオ高専所属宇都木修一先生が使用するものである．
+\\2)上記の図1，図2，図3に記した備品シールそのものへの細工は不可とする．しかし備品シール外の場所への細工は可とする．
+\\3)タブレットを用いる場合英数字およびコンボボックス等の選択形式のものを基本とする．
+\\4)Android端末は普段持ち歩かず備品リスト等で現状の備品の確認を行うときにのみ使用する．
+\\5)Android端末はインターネット接続が行えないものと考える．
+
+  \section{デザイン要求}
+  能動的に操作が可能なデザイン．１つの機能を利用するために複数の操作が必要となるシステムは避ける．
+
+  \section{ソフトウェア構成}
+  本ソフトウェアでは図1，図2，図3のような備品シールに記載されている，資産コード，資産名，数量，さらにその備品の管理者といった情報を整理し，Windows及びAndroidの両方で新規情報の登録，登録情報の閲覧，また登録情報の所有者情報の変更の際や破損した際の編集も行うことができる．
+  
+  また，備品の管理を簡易化するために各部屋ごとの備品といった検索機能や備品があるかどうかのチェック機能も搭載されている．
+
+  \newpage
+  \section{各種機能説明}
+  \subsection{登録情報概要}
+  情報の登録を行う際に使用する情報を以下に記す．
+  \\1)資産コード
+  \begin{figure}[h]
+  \begin{center}
+\includegraphics[keepaspectratio, scale=0.45]{jouhoutouroku1}
+\caption{1つの資産コード内で複数の資産名を持つ備品シール}
+\end{center}
+\end{figure}
+\\各備品シールに割り当てられている資産コード．図4のような複数個資産名が存在する場合は-1，-2などを資産コード末尾に入力して別の資産扱いで登録する．
+\\2)資産名
+\\備品の名称．図4のような場合には1つの資産コードに複数個をまとめて登録するのではなく-1，-2などを末尾につけた資産コードごとに登録する．
+\\3)数量
+  \begin{figure}[h]
+  \begin{center}
+\includegraphics[keepaspectratio, scale=0.45]{jouhoutouroku3}
+\caption{数量が明示されている備品シール}
+\end{center}
+\end{figure}
+\\同資産コードを割り当てられた備品の数量．図5のように記載されている．
+\\4)管理者
+\\備品の管理者．
+\\5)管理場所
+\\資産コードの割り当てられている備品の管理場所．
+  \newpage
+  \begin{figure}[h]
+    \begin{center}
+\includegraphics[keepaspectratio, scale=0.2]{jouhoutouroku2}
+\caption{情報の備品シール}
+\end{center}
+\end{figure}
+
+しかし図6の備品シールに資産名が存在しない場合のように備品シールの情報に欠落がある場合がある．この時，備品シールに掲載されていない情報は登録の際入力しないものとする．
+
+  \subsection{システム概要}
+  
+システムの概要を以下に記す．windows及びandroidの両方で動作が同様のものはまとめて記載する．
+
+\subsubsection{Windowsでの登録}
+\noindent
+1)アプリケーション起動後新規登録ボタンを押すことで新規登録ページが起動する
+\\2)新規登録ページに登録情報（資産コード，資産名，数量，管理者，管理場所）を入力
+\\3)登録完了確認後に登録完了
+
+\subsubsection{Windows，Androidでの検索}
+\noindent
+1)検索ボックスより場所や所有者などの検索を行いたい対象を選択する
+\\2)隣接するコンボボックスがそれに対応した選択肢に変化する
+\\3)変化した選択肢内から検索対象を選択，選択肢内に無い場合は手動で入力する．1)で他の検索対象を選択した場合も同様の操作を行う．
+\\4)検索した対象が表に出力される
+
+\subsubsection{Windows，Androidでの表への表示}
+\noindent
+1)初期状態は空欄である
+\\2)検索を行うことによって表示が行われる
+
+\subsubsection{Windows，Androidでの備品チェック}
+\noindent
+1)チェック用のボタンを操作する
+\\2)表にチェックマークが出現する
+\\3)チェックマークをつけた日の日付が表に更新され表示される．
+\\4)チェックが完了次第，チェックマークを外す
+\\5)終了ボタンを押すことでチェックモードが終了する
+
+\subsubsection{Windowsでの編集}
+\noindent
+1)表に表示されている編集したい項目を選択
+\\2)その中の編集したい情報の場所をダブルクリックすることで直接編集を行うことができる
+
+\subsubsection{Androidでの編集}
+\noindent
+1)編集を行いたい項目を長押しする
+\\2)「編集」と「削除」のポップアップが表示される
+\\3)「編集」を選択すると直接編集を行うことができる
+
+\subsubsection{Windowsでの削除}
+\noindent
+1)表示されている削除したい項目を選択
+\\2)その中の削除を選択する
+\\3)確認後に削除を行う
+
+\subsubsection{Androidでの削除}
+\noindent
+1)削除を行いたい項目を長押しする
+\\2)「編集」と「削除」のポップアップが表示される
+\\3)「削除」を選択すると確認後に削除を行う
+
+  \newpage
+  \section{更新経歴}
+  \noindent
+  2019/06/13　初期版作成	廣瀬　水間
+  \\2019/06/28　誤字脱字修正，情報の修正　廣瀬
+  \\2019/08/01　誤字脱字修正，不足情報修正，空白の削除，カンマの統一　水間　桶本
+  \\2019/10/25　仕様変更に伴う修正　水間
+\end{document}
